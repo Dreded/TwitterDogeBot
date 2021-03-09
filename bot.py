@@ -84,4 +84,4 @@ class Bot:
                 self.last_match = tweet[0].id
                 return tweet[0]
         except:
-            return "Some sort of error occured fetching tweets"
+            return False
