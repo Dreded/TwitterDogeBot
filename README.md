@@ -22,6 +22,6 @@ python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
-Edit credentials.py.example and save as credentials.py
-Edit main.py as needed to change target and timers.
-By default the bot will not actually do any real trading for that you would need to set test_run to False in main.py
+Edit credentials.py.example and save as credentials.py\
+Edit main.py as needed to change target and timers.\
+By default the bot will not actually do any real trading for that you would need to set test_run to False in main.py\
