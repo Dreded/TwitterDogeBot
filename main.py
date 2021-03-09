@@ -22,7 +22,7 @@ if __name__ == "__main__":
     k = Kraken(timer_minutes=1, test_run=True)
     while True:
         print("\nGetting Last Tweet...",end="")
-        result = Bot.get_user_last_tweet("Dreded")
+        result = Bot.get_user_last_tweet("elonmusk")
         if type(result) is not str:
             fmt = '%Y-%m-%d %H:%M:%S'
             tweet_time = gmt.localize(result.created_at)
