@@ -22,7 +22,7 @@ class Bot:
         except tweepy.TweepError as e:
             print('ERROR : connection failed. Check your OAuth keys.')
         else:
-            print('Connected as @{}, you can start to tweet !'.format(self.client.me().screen_name))
+            print('Connected as @{}, let the meme coin buying begin!'.format(self.client.me().screen_name))
             self.client_id = self.client.me().id
 
     def is_word_in_text(self, word, text):
