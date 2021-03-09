@@ -12,7 +12,7 @@ def mySleep(time):
     while timer < time:
         timer += 1
         sleep(1)
-        print(timer,end="...")
+        print(' --==',timer,end=' ==--\r')
     print("")
     return
 if __name__ == "__main__":
