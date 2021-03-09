@@ -1,2 +1,2 @@
-# TwitterDogeBot"
-![Screenshot](img.jpg?raw=true "Title")
+# TwitterDogeBot
+![Screenshot](screencap.png?raw=true "Title")
