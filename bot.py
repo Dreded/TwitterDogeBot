@@ -73,12 +73,15 @@ class Bot:
                            # otherwise only the first 140 words are extracted
                            tweet_mode = 'extended'
                            )
-        if self.last_match == 0:
-            self.last_match = tweet[0].id
-            return "First Run so not matching... {}".format(tweet[0].full_text)
-        elif self.last_match >= tweet[0].id:
-            #used greater than so if tweets are deleted they dont get matched
-            return "Tweet has not changed."
-        else:
-            self.last_match = tweet[0].id
-            return tweet[0]
+        try:
+            if self.last_match == 0:
+                self.last_match = tweet[0].id
+                return "First Run so not matching... {}".format(tweet[0].full_text)
+            elif self.last_match >= tweet[0].id:
+                #used greater than so if tweets are deleted they dont get matched
+                return "Tweet has not changed."
+            else:
+                self.last_match = tweet[0].id
+                return tweet[0]
+        except:
+            return "Some sort of error occured fetching tweets"
