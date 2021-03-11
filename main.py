@@ -36,14 +36,16 @@ if __name__ == "__main__":
     # timer_minutes sets how long to wait until intiating the sell default = 25m
     k = Kraken(timer_minutes=timer_minutes, test_run=test_run)
     total_runs = 0
+    total_new_tweets = 0
     while True:
         os.system('CLS')
-        print("Doge Tweets Found: {}x\tChecked Feed: {}x\n".format(Bot.match_count,total_runs)) 
+        print("Doge Tweets Found: {}x\tNew Tweets:{}x\tChecked Feed: {}x\n".format(Bot.match_count,total_new_tweets,total_runs)) 
         print("Getting Last Tweet...")
         result = Bot.get_user_last_tweet("elonmusk")
         if not result[0]:
             print("Error: {}".format(result[1]))
         elif type(result) is not str:
+            total_new_tweets += 1
             fmt = '%Y-%m-%d %H:%M:%S'
             tweet_time = gmt.localize(result.created_at)
             local_time = tweet_time.astimezone(local)
