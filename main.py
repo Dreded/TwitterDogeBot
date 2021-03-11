@@ -1,5 +1,6 @@
 import datetime
 import pytz
+import os
 from time import sleep
 from bot import Bot
 from kraken import Kraken
@@ -34,13 +35,14 @@ if __name__ == "__main__":
     # if test_run = True wont actually buy or sell anything just makes a fake run with real prices etc.
     # timer_minutes sets how long to wait until intiating the sell default = 25m
     k = Kraken(timer_minutes=timer_minutes, test_run=test_run)
+    total_runs = 0
     while True:
-        skip_sleep = False
-        print("\nGetting Last Tweet... Doge Found: {}x ...".format(Bot.match_count),end="")
+        os.system('CLS')
+        print("Doge Tweets Found: {}x\tChecked Feed: {}x\n".format(Bot.match_count,total_runs)) 
+        print("Getting Last Tweet...")
         result = Bot.get_user_last_tweet("elonmusk")
         if not result[0]:
-            print("Something went wrong grabbing tweets... {} ... sleeping 2 seconds".format(result[1]))
-            skip_sleep = True
+            print("Error: {}".format(result[1]))
         elif type(result) is not str:
             fmt = '%Y-%m-%d %H:%M:%S'
             tweet_time = gmt.localize(result.created_at)
@@ -53,7 +55,5 @@ if __name__ == "__main__":
         k.check_sell_doge()
         
         #time to sleep before checking tweets again
-        if not skip_sleep:
-            mySleep(sleep_time)
-        else:
-            mySleep(2)
+        mySleep(sleep_time)
+        total_runs += 1

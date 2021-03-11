@@ -1,6 +1,7 @@
 import tweepy
 import re
 from credentials import keys
+from time import sleep
 
 
 class Bot:
@@ -68,21 +69,24 @@ class Bot:
 
     def get_user_last_tweet(self, userID):
         loop_count = 0
-        while loop_count <= 5:
+        while True:
             tweet = self.get_user_tweets(userID,1)
             try:
+                if loop_count == 5:
+                    raise Exception("Twitter didn't respond 5x so lets wait and try again.")
                 if self.last_match == 0:
                     self.last_match = tweet[0].id
-                    return "First Run so not matching... {}".format(tweet[0].full_text)
+                    return "First Run so not matching...\n{}".format(tweet[0].full_text)
                 elif self.last_match >= tweet[0].id:
                     #used greater than so if tweets are deleted they dont get matched
-                    return "Tweet has not changed."
+                    return "\tTweet has not changed."
                 else: #match found
                     self.match_count = 1
                     self.last_match = tweet[0].id
                     return tweet[0]
             except IndexError:
                 loop_count += 1
+                sleep(.5)
 
             except Exception as e:
                 return [False,e]
