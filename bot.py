@@ -45,15 +45,15 @@ class Bot:
         matches = re.search(pattern, text)
         return bool(matches)
     
-    def add_to_matches(self,id):
-        #requires a reverse list to work properly
-        self.match_list.append(id)
-        if len(self.match_list) > 5:
-            self.match_list.popleft()
+    # def add_to_matches(self,id):
+    #     #requires a reverse list to work properly
+    #     self.match_list.append(id)
+    #     if len(self.match_list) > 5:
+    #         self.match_list.popleft()
 
-    def get_botuser_last_tweet(self):
-        tweet = self.client.user_timeline(id = self.client_id, count = 1)[0]
-        print(tweet.text)
+    # def get_botuser_last_tweet(self):
+    #     tweet = self.client.user_timeline(id = self.client_id, count = 1)[0]
+    #     print(tweet.text)
 
     def get_user_tweets(self, userID, count):
         tweets = self.client.user_timeline(screen_name=userID, 
