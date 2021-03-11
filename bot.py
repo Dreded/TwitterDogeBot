@@ -54,36 +54,35 @@ class Bot:
         tweet = self.client.user_timeline(id = self.client_id, count = 1)[0]
         print(tweet.text)
 
-    def get_user_tweets(self, userID):
+    def get_user_tweets(self, userID, count):
         tweets = self.client.user_timeline(screen_name=userID, 
                            # 200 is the maximum allowed count
-                           count=200,
+                           count=count,
                            include_rts = False,
                            exclude_replies=True,
                            # Necessary to keep full_text 
                            # otherwise only the first 140 words are extracted
                            tweet_mode = 'extended'
                            )
+        return tweets
 
     def get_user_last_tweet(self, userID):
-        tweet = self.client.user_timeline(screen_name=userID, 
-                           count=1,
-                           include_rts = False,
-                           exclude_replies=True,
-                           # Necessary to keep full_text 
-                           # otherwise only the first 140 words are extracted
-                           tweet_mode = 'extended'
-                           )
-        try:
-            if self.last_match == 0:
-                self.last_match = tweet[0].id
-                return "First Run so not matching... {}".format(tweet[0].full_text)
-            elif self.last_match >= tweet[0].id:
-                #used greater than so if tweets are deleted they dont get matched
-                return "Tweet has not changed."
-            else: #match found
-                self.match_count = 1
-                self.last_match = tweet[0].id
-                return tweet[0]
-        except Exception as e:
-            return [False,e]
+        loop_count = 0
+        while loop_count <= 5:
+            tweet = self.get_user_tweets(userID,1)
+            try:
+                if self.last_match == 0:
+                    self.last_match = tweet[0].id
+                    return "First Run so not matching... {}".format(tweet[0].full_text)
+                elif self.last_match >= tweet[0].id:
+                    #used greater than so if tweets are deleted they dont get matched
+                    return "Tweet has not changed."
+                else: #match found
+                    self.match_count = 1
+                    self.last_match = tweet[0].id
+                    return tweet[0]
+            except IndexError:
+                loop_count += 1
+
+            except Exception as e:
+                return [False,e]
