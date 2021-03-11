@@ -25,8 +25,8 @@ def mySleep(time):
     timer = 0
     while timer < time:
         timer += 1
-        sleep(1)
         print(' --==',timer,end=' ==--\r')
+        sleep(1)
     print("")
     return
 if __name__ == "__main__":
@@ -36,10 +36,10 @@ if __name__ == "__main__":
     k = Kraken(timer_minutes=timer_minutes, test_run=test_run)
     while True:
         skip_sleep = False
-        print("\nGetting Last Tweet... ",end="")
+        print("\nGetting Last Tweet... Doge Found: {}x ...".format(Bot.match_count),end="")
         result = Bot.get_user_last_tweet("elonmusk")
-        if not result:
-            print("Something went wrong grabbing tweets... sleeping 2 seconds")
+        if not result[0]:
+            print("Something went wrong grabbing tweets... {} ... sleeping 2 seconds".format(result[1]))
             skip_sleep = True
         elif type(result) is not str:
             fmt = '%Y-%m-%d %H:%M:%S'
