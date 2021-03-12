@@ -15,13 +15,11 @@ class Kraken():
 
         self.api = krakenex.API(key=kraken_keys[0],secret=kraken_keys[1])
         self.k = KrakenAPI(self.api)
-        self.total_qty = self.get_doge_balance()
+        self.total_doge_qty = self.get_doge_balance()
         self.buy_time = 0
         self.buy_price = 0
         self.sell_time = datetime.datetime(year=2199, month=1, day=1, hour=2).astimezone(local)
         self.sell_price = 0
-
-        print("Current Doge Balance: {}".format(self.total_qty))
     
     def get_balances(self):
         return self.k.get_account_balance()

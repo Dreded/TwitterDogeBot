@@ -28,8 +28,21 @@ def mySleep(time):
         timer += 1
         print(' --==',timer,end=' ==--\r')
         sleep(1)
-    print("")
     return
+
+def print_header():
+    os.system('CLS')
+    headers = {
+        "Doge Tweet Found:":    "{}x".format(total_doge_tweets),
+        "New Tweets:":          "{}x".format(total_new_tweets),
+        "Checked Feed:":        "{}x".format(total_runs),
+        "Owned Doge Coins:":    k.total_doge_qty,
+    }
+    for key,value in headers.items():
+        print(key,value,end="    ")
+    print("")
+    print("Getting Last Tweet...")
+
 if __name__ == "__main__":
     Bot = Bot()
     # if test_run = True wont actually buy or sell anything just makes a fake run with real prices etc.
@@ -37,25 +50,26 @@ if __name__ == "__main__":
     k = Kraken(timer_minutes=timer_minutes, test_run=test_run)
     total_runs = 0
     total_new_tweets = 0
-    doge_tweets = 0
+    total_doge_tweets = 0
     while True:
-        os.system('CLS')
-        print("Doge Tweets Found: {}x\tNew Tweets:{}x\tChecked Feed: {}x\n".format(doge_tweets,total_new_tweets,total_runs)) 
-        print("Getting Last Tweet...")
-        result = Bot.get_user_last_tweet("Dreded")
+        result = Bot.get_user_last_tweet("elonmusk")
         if not result[0]:
+            print_header()
             print("Error: {}".format(result[1]))
         elif type(result) is not str:
             total_new_tweets += 1
+            print_header()
             tweet = result[0]
             fmt = '%Y-%m-%d %H:%M:%S'
             tweet_time = gmt.localize(tweet.created_at)
             local_time = tweet_time.astimezone(local)
             print("\n{} - {}".format(local_time.strftime(fmt), tweet.full_text))
             if Bot.is_sequence_in_text("doge",tweet.full_text):
-                doge_tweets += 1
+                total_doge_tweets += 1
+                print_header()
                 k.buy_doge(buy_ammount)
         else: 
+            print_header()
             print(result)
         k.check_sell_doge()
         
