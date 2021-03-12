@@ -41,16 +41,17 @@ if __name__ == "__main__":
         os.system('CLS')
         print("Doge Tweets Found: {}x\tNew Tweets:{}x\tChecked Feed: {}x\n".format(Bot.match_count,total_new_tweets,total_runs)) 
         print("Getting Last Tweet...")
-        result = Bot.get_user_last_tweet("elonmusk")
+        result = Bot.get_user_last_tweet("Dreded")
         if not result[0]:
             print("Error: {}".format(result[1]))
         elif type(result) is not str:
             total_new_tweets += 1
+            tweet = result[0]
             fmt = '%Y-%m-%d %H:%M:%S'
-            tweet_time = gmt.localize(result.created_at)
+            tweet_time = gmt.localize(tweet.created_at)
             local_time = tweet_time.astimezone(local)
-            print("\n{} - {}".format(local_time.strftime(fmt), result.full_text))
-            if Bot.is_sequence_in_text("doge",result.full_text):
+            print("\n{} - {}".format(local_time.strftime(fmt), tweet.full_text))
+            if Bot.is_sequence_in_text("doge",tweet.full_text):
                 k.buy_doge(buy_ammount)
         else: 
             print(result)

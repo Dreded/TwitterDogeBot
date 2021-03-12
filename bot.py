@@ -83,7 +83,7 @@ class Bot:
                 else: #match found
                     self.match_count = 1
                     self.last_match = tweet[0].id
-                    return tweet[0]
+                    return tweet
             except IndexError:
                 loop_count += 1
                 sleep(.5)
