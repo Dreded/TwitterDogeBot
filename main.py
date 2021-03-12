@@ -37,9 +37,10 @@ if __name__ == "__main__":
     k = Kraken(timer_minutes=timer_minutes, test_run=test_run)
     total_runs = 0
     total_new_tweets = 0
+    doge_tweets = 0
     while True:
         os.system('CLS')
-        print("Doge Tweets Found: {}x\tNew Tweets:{}x\tChecked Feed: {}x\n".format(Bot.match_count,total_new_tweets,total_runs)) 
+        print("Doge Tweets Found: {}x\tNew Tweets:{}x\tChecked Feed: {}x\n".format(doge_tweets,total_new_tweets,total_runs)) 
         print("Getting Last Tweet...")
         result = Bot.get_user_last_tweet("Dreded")
         if not result[0]:
@@ -52,6 +53,7 @@ if __name__ == "__main__":
             local_time = tweet_time.astimezone(local)
             print("\n{} - {}".format(local_time.strftime(fmt), tweet.full_text))
             if Bot.is_sequence_in_text("doge",tweet.full_text):
+                doge_tweets += 1
                 k.buy_doge(buy_ammount)
         else: 
             print(result)

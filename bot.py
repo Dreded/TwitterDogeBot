@@ -12,7 +12,6 @@ class Bot:
         self._access_secret = keys[3]
         self.last_match = 0
         self.match_list = []
-        self.match_count = 0
 
         try:
             auth = tweepy.OAuthHandler(self._consumer_key,
@@ -80,8 +79,7 @@ class Bot:
                 elif self.last_match >= tweet[0].id:
                     #used greater than so if tweets are deleted they dont get matched
                     return "\tTweet has not changed."
-                else: #match found
-                    self.match_count = 1
+                else: #tweet changed
                     self.last_match = tweet[0].id
                     return tweet
             except IndexError:
