@@ -75,10 +75,10 @@ class Bot:
                     raise Exception("Twitter didn't respond 5x so lets wait and try again.")
                 if self.last_match == 0:
                     self.last_match = tweet[0].id
-                    return "First Run so not matching...\n{}".format(tweet[0].full_text)
+                    return "First Run so not matching...\n\n{}".format(tweet[0].full_text)
                 elif self.last_match >= tweet[0].id:
                     #used greater than so if tweets are deleted they dont get matched
-                    return "\tTweet has not changed."
+                    return "Tweet has not changed."
                 else: #tweet changed
                     self.last_match = tweet[0].id
                     return tweet

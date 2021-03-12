@@ -41,7 +41,7 @@ def print_header():
     for key,value in headers.items():
         print(key,value,end="    ")
     print("")
-    print("Getting Last Tweet...")
+    print("Getting Last Tweet...\n")
 
 if __name__ == "__main__":
     Bot = Bot()
@@ -70,7 +70,7 @@ if __name__ == "__main__":
                 k.buy_doge(buy_ammount)
         else: 
             print_header()
-            print(result)
+            print(result,"\n")
         k.check_sell_doge()
         
         #time to sleep before checking tweets again
