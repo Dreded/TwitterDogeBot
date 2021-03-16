@@ -30,7 +30,7 @@ class Kraken():
     def buy_doge(self,qty):
         self.buy_price = self.get_doge_price()
         print("Initiating buy of {} Doge at ${:4f} USD".format(qty,self.buy_price))
-        self.total_qty += qty
+        self.total_doge_qty += qty
         order = self.k.add_standard_order(pair="XDGXBT", type="buy", ordertype="market", volume=qty,validate=self.test_run)
         self.buy_time = datetime.datetime.now().replace(microsecond=0).astimezone(local)
         self.sell_time = self.buy_time+datetime.timedelta(minutes=self.timer_minutes)
@@ -38,7 +38,7 @@ class Kraken():
 
     def check_sell_doge(self):
         if self.sell_time < datetime.datetime.now().astimezone(local):
-            self.sell_doge(self.total_qty)
+            self.sell_doge(self.total_doge_qty)
         elif self.sell_time-datetime.datetime.now().astimezone(local) < datetime.timedelta(days=100):
             print("Selling in:",self.sell_time-datetime.datetime.now().replace(microsecond=0).astimezone(local))
         return
@@ -51,11 +51,11 @@ class Kraken():
         gain_percent = ((self.sell_price - self.buy_price)/self.buy_price)*100
         return_ammount = (self.sell_price-self.buy_price)*qty
         print("Initiating sell of {} Doge at ${:4f} USD for a return of ${:.4f} USD which is a {:.4f}% gain".format(qty,self.sell_price,return_ammount,gain_percent))
-        if qty > self.total_qty:
-            print("Cannot sell {} Doge, we only have {} to sell.".format(qty,self.total_qty))
+        if qty > self.total_doge_qty:
+            print("Cannot sell {} Doge, we only have {} to sell.".format(qty,self.total_doge_qty))
             return
         order = self.k.add_standard_order(pair="XDGXBT", type="sell", ordertype="market", volume=qty,validate=self.test_run)
-        self.total_qty -= qty
+        self.total_doge_qty -= qty
         self.sell_time = datetime.datetime(year=2199, month=1, day=1, hour=2).astimezone(local)
         return order
 
